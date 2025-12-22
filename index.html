@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lexicon | Portfolio Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+    <nav class="p-6 bg-white shadow-sm flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-indigo-600">AI Lexicon</h1>
+        <button onclick="startFlashcardGame()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">🎮 Play Game (10 Words)</button>
+    </nav>
+
+    <main id="app-container" class="max-w-4xl mx-auto mt-10 p-4">
+        <div id="list-view" class="grid gap-4"></div>
+
+        <div id="game-view" class="hidden text-center py-20">
+            <div id="card" class="bg-white p-10 rounded-2xl shadow-xl border border-indigo-100 mb-6">
+                <h2 id="game-word" class="text-5xl font-black mb-4">Word</h2>
+                <div id="game-details" class="hidden space-y-4">
+                    <p id="game-hindi" class="text-2xl text-indigo-500 font-bold"></p>
+                    <p id="game-meaning" class="italic text-gray-600"></p>
+                </div>
+            </div>
+            <button id="reveal-btn" onclick="revealCard()" class="bg-slate-800 text-white px-8 py-3 rounded-full">Reveal Meaning</button>
+            <button id="next-btn" onclick="nextWord()" class="hidden bg-indigo-600 text-white px-8 py-3 rounded-full">Next Word →</button>
+        </div>
+    </main>
+
+    <script>
+        let dictionary = [];
+        let gameQueue = [];
+        let currentIndex = 0;
+
+        // Fetch Data from your 'Gold' JSON
+        async function loadData() {
+            const response = await fetch('./data/words.json');
+            dictionary = await response.json();
+            renderList();
+        }
+
+        function renderList() {
+            const listContainer = document.getElementById('list-view');
+            listContainer.innerHTML = dictionary.map(item => `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold">${item.word} <span class="text-sm font-normal text-slate-400">(${item.hindi_meaning})</span></h3>
+                    <p class="text-slate-600 mt-2">${item.meaning}</p>
+                </div>
+            `).join('');
+        }
+
+        function startFlashcardGame() {
+            document.getElementById('list-view').classList.add('hidden');
+            document.getElementById('game-view').classList.remove('hidden');
+            gameQueue = [...dictionary].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentIndex = 0;
+            showWord();
+        }
+
+        function showWord() {
+            document.getElementById('game-word').innerText = gameQueue[currentIndex].word;
+            document.getElementById('game-hindi').innerText = gameQueue[currentIndex].hindi_meaning;
+            document.getElementById('game-meaning').innerText = gameQueue[currentIndex].meaning;
+            document.getElementById('game-details').classList.add('hidden');
+            document.getElementById('reveal-btn').classList.remove('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function revealCard() {
+            document.getElementById('game-details').classList.remove('hidden');
+            document.getElementById('reveal-btn').classList.add('hidden');
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextWord() {
+            currentIndex++;
+            if (currentIndex < gameQueue.length) {
+                showWord();
+            } else {
+                alert("Session Complete!");
+                location.reload();
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
