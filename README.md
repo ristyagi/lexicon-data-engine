@@ -50,7 +50,7 @@ The "Gold" dataset is stored in `data/words.json` with the following schema:
   "example1": "Our meeting was entirely serendipitous.",
   "example2": "The discovery of Penicillin was serendipitous."
 }
-
+```
 ---
 
 ## 📊 Upcoming Features
