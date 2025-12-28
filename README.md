@@ -53,7 +53,7 @@ The "Gold" dataset is stored in `data/words.json` with the following schema:
 ```
 ---
 
-## 📊 Upcoming Features
+## 🧱 Upcoming Features
 
 
 1. Scoring system for 'Play Game' Feature.
