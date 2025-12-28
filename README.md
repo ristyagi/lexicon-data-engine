@@ -16,7 +16,7 @@ This project is designed as a **decoupled data pipeline** that automates the col
 
 ---
 
-## 🏗️ Architectural Design (Principal Data Engineer Lens)
+## 🏗️ Architectural Design
 
 
 
@@ -50,3 +50,13 @@ The "Gold" dataset is stored in `data/words.json` with the following schema:
   "example1": "Our meeting was entirely serendipitous.",
   "example2": "The discovery of Penicillin was serendipitous."
 }
+
+---
+
+## 📊 Upcoming Features
+
+
+1. Scoring system for 'Play Game' Feature.
+2. More words for all difficulty levels.
+3. Integration with ETL pipeline.
+
